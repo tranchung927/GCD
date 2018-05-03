@@ -29,8 +29,8 @@ class ViewController: UIViewController {
         // Vòng lặp 5 lần tượng trưng đưa 5 task vào trong serial queue
         for i in 1...5 {
             
-            // Các task đưa vào sẽ được đánh dấu là Synchronous
-            serialQueue.sync {
+            // Các task đưa vào sẽ được đánh dấu là Aynchronous
+            serialQueue.async {
                 print("Task \(i): - \(Thread.current))")
                 // Vì hệ thống sẽ xử ý rất nhanh
                 //nên mỗi lần chạy xong nghỉ 1s để quan sát rõ hơn.
