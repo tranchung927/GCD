@@ -13,7 +13,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        simpleQueue()
+//        simpleQueue()
+        simpleConcurrentQueue()
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,5 +41,20 @@ class ViewController: UIViewController {
         print("Complete! - \(Thread.current)")
     }
 
+    func simpleConcurrentQueue() {
+        // Khai báo serial queue
+        let concurrentQueue = DispatchQueue(label: "com.bigZero.concurrentQueue",
+                                            attributes: .concurrent)
+        
+        // Vòng lặp 10 lần tượng trưng đưa 5 task vào trong concurrent queue
+        for i in 1...10 {
+            // Các task đưa vào sẽ được đánh dấu là Aynchronous
+            concurrentQueue.async {
+                print("Task \(i) - \(Thread.current)")
+                sleep(1)
+            }
+        }
+        print("Complete! - \(Thread.current)")
+    }
 }
 
