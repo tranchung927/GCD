@@ -14,7 +14,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 //        simpleQueue()
-        simpleConcurrentQueue()
+//        simpleConcurrentQueue()
+        simpleRacingData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,6 +56,18 @@ class ViewController: UIViewController {
             }
         }
         print("Complete! - \(Thread.current)")
+    }
+    
+    func simpleRacingData() {
+        let queue = DispatchQueue(label: "com.bigZero.currentQueueRacing",
+                                  attributes: .concurrent)
+        var count = 0
+        for _ in 1...25000 {
+            queue.async {
+                count += 1
+                print(count)
+            }
+        }
     }
 }
 
