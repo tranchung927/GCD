@@ -9,15 +9,17 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-//        simpleQueue()
-//        simpleConcurrentQueue()
-        simpleRacingData()
+        //        simpleQueue()
+        //        simpleConcurrentQueue()
+        //        simpleRacingData()
+        //        simpleAsyncAfter()
+        simpleDispatchWorkItem()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -41,7 +43,7 @@ class ViewController: UIViewController {
         }
         print("Complete! - \(Thread.current)")
     }
-
+    
     func simpleConcurrentQueue() {
         // Khai báo serial queue
         let concurrentQueue = DispatchQueue(label: "com.bigZero.concurrentQueue",
@@ -68,6 +70,40 @@ class ViewController: UIViewController {
                 print(count)
             }
         }
+    }
+    
+    func simpleAsyncAfter() {
+        let queue = DispatchQueue(label: "com.bigZero.queue")
+        queue.asyncAfter(deadline: .now() + 2) {
+            print("Simple asyncAfter")
+        }
+    }
+    
+    func simpleDispatchWorkItem() {
+        var count = 0
+        
+        // Khai báo 1 DispatchWorkItem thực hiện
+        // công việc tăng count lên 1 và in ra terminal
+        let item = DispatchWorkItem {
+            count += 1
+            print(count)
+        }
+        for _ in 1...1000 {
+            // Kiểm tra count nếu bằng 900 thì dừng
+            if count == 900 {
+                item.cancel()
+                print("DispatchWorkItem cancel")
+                break
+            } else {
+               item.perform()
+            }
+        }
+    }
+    
+    func simpleDispatchGroup() {
+        let group = DispatchGroup()
+        group.enter()
+        
     }
 }
 
